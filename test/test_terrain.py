@@ -1,5 +1,6 @@
 
 import unittest
+import os
 import xmlrunner
 
 from Terrain import Terrain, Case
@@ -7,8 +8,17 @@ from Terrain import Terrain, Case
 class TestTerrain(unittest.TestCase):
 
     def test_chargement(self):
-        # TODO
-        self.fail()
+        f = open("terrain_test.txt", "w")
+        f.write("~~C\nE X\n")
+        f.close()
+        t = Terrain()
+        t.charger("terrain_test.txt")
+        self.assertEqual(t.largeur, 3)
+        self.assertEqual(t.hauteur, 2)
+        self.assertEqual(t[0][2], Case.CLIENT)
+        self.assertEqual(t[1][0], Case.ENTREE)
+        self.assertEqual(t[1][1], Case.OBSTACLE)
+        os.remove("terrain_test.txt")
 
     def test_get_entree(self):
         t = Terrain()
